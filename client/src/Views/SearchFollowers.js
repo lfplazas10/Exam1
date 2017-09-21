@@ -36,13 +36,16 @@ class SearchPlayer extends React.Component {
     console.log(this.state.value);
     this.setState({value: event.target.value});
     var upperClass = this;
+    this.state.users.push({name:upperClass.state.value});
     axios.get('/getFollowers/' + this.state.value)
       .then(function (response) {
         console.log(response.data.data)
+        console.log(upperClass.state)
         upperClass.setFollowers(response.data.data);
-        upperClass.state.users.push({name:upperClass.state.value});
+
       })
       .catch(function (error) {
+        upperClass.state.users.splice(upperClass.state.users.length, 1);
         alert(error);
       });
     event.preventDefault();
@@ -54,7 +57,7 @@ class SearchPlayer extends React.Component {
       <div>
         <div>
           {this.state.users.map((user, i) =>
-            <h4>{user.name}</h4>
+            <h4 style={{marginLeft : 8+'px'}}> {user.name} -</h4>
           )}
         </div>
         <form onSubmit={this.handleSubmit}>
