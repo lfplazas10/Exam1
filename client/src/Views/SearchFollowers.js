@@ -107,7 +107,7 @@ class SearchPlayer extends React.Component {
           <div>
             <div>
               {this.state.users.map((user, i) =>
-                <span style={{marginLeft: 8 + 'px'}}> {user} </span>
+                <span key={i} style={{marginLeft: 8 + 'px'}}> {user} </span>
               )}
             </div>
 

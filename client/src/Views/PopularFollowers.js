@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../CSS/Table.css';
 
 class PopularFollowers extends React.Component {
-  //
+
   constructor(props) {
     super(props);
     this.state =
@@ -28,7 +28,6 @@ class PopularFollowers extends React.Component {
     var upperClass = this;
     axios.get('/followers/best')
       .then(function (response) {
-        console.log(response)
         upperClass.setPopularFollowers(response.data);
       })
       .catch(function (error) {
@@ -41,7 +40,6 @@ class PopularFollowers extends React.Component {
   }
 
   render() {
-    console.log(this.state.popularFollowers);
     return (
       <div>
         <table className="table-fill">

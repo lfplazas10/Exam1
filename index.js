@@ -10,22 +10,21 @@ MongoClient.connect("mongodb://admin:AdminAdmin@ds139954.mlab.com:39954/datosdep
     router.use(express.static(path.join(__dirname, 'client/build')));
 
     var github = new GitHubApi({
-    // optional
     });
 
     router.get('/getFollowers/:userName', function (req, res) {
       console.log(req.params.userName);
       github.users.getFollowingForUser({
-          username: req.params.userName
-      }, function(err, resp) {
-          console.log(resp);
-          res.send(JSON.stringify(resp));
+        username: req.params.userName
+      }, function (err, resp) {
+        console.log(resp);
+        res.send(JSON.stringify(resp));
       });
     });
 
     router.get('/followers/best', function (req, res) {
       var col = db.collection('Followers');
-      col.find({}, { sort : {followers:-1}}).limit(10).toArray(function (error, resp) {
+      col.find({}, {sort: {followers: -1}}).limit(10).toArray(function (error, resp) {
         console.log(resp);
         res.send(resp);
       })
@@ -33,21 +32,20 @@ MongoClient.connect("mongodb://admin:AdminAdmin@ds139954.mlab.com:39954/datosdep
 
     router.post('/followers/:userName', function (req, res) {
       var player = {
-        name : req.params.userName,
-        followers : req.body.followers
+        name: req.params.userName,
+        followers: req.body.followers
       }
       var col = db.collection('Followers');
-      col.updateOne({"name" : req.params.userName }, player, {upsert: true}).then(function (mongoError, ej2) {
+      col.updateOne({"name": req.params.userName}, player, {upsert: true}).then(function (mongoError, ej2) {
         res.send(ej2);
       })
     });
 
     router.get('*', function (req, res) {
-      res.sendFile(path.join(__dirname+'/client/build/index.html'));
+      res.sendFile(path.join(__dirname + '/client/build/index.html'));
     });
 
   }
 });
-
 
 module.exports = router;

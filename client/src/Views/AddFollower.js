@@ -2,7 +2,7 @@ import React from 'react'
 import '../App.css';
 
 class AddFollower extends React.Component {
-  //
+
   constructor(props) {
     super(props);
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -27,7 +27,5 @@ class AddFollower extends React.Component {
     </div>;
   }
 }
-
-
 
 export default AddFollower;
