@@ -22,6 +22,7 @@ class SearchPlayer extends React.Component {
     this.updateInputValue = this.updateInputValue.bind(this);
     this.handleFollowerClick = this.handleFollowerClick.bind(this);
     this.displayBest = this.displayBest.bind(this);
+    this.handleSuperiorClick = this.handleSuperiorClick.bind(this);
   }
 
   setFollowers(followers) {
@@ -34,7 +35,15 @@ class SearchPlayer extends React.Component {
     this.setState({value: event.target.value});
   }
 
+  handleSuperiorClick(name){
+    this.state.displayingBest = false;
+    this.state.users = [];
+    this.state.users.push(name);
+    this.updateUserList(name);
+  }
+
   handleFollowerClick(name) {
+    this.state.displayingBest = false;
     this.state.users.push(name);
     this.updateUserList(name);
   }
@@ -60,6 +69,7 @@ class SearchPlayer extends React.Component {
   }
 
   handleSubmit(event) {
+    this.state.displayingBest = false;
     this.state.users = [];
     var name = this.state.value;
     this.state.users.push(name);
@@ -69,8 +79,7 @@ class SearchPlayer extends React.Component {
   }
 
   displayBest() {
-    console.log('JOJO')
-    this.state.displayingBest = !this.state.displayingBest;
+    this.state.displayingBest = true;
     this.render();
     this.forceUpdate();
   }
@@ -78,21 +87,23 @@ class SearchPlayer extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="col-md-3">
+        <div className="row">
+          <form onSubmit={this.handleSubmit} style={{width : '60%'}}>
+            <div className="col-md-8" style={{width : '60%'}}>
               <input type="text" className="form-control" value={this.state.value} onChange={this.updateInputValue}/>
             </div>
-            <div className="col-md-3">
-              <input type="submit" className="btn btn-primary" value="Search followers"/>
+            <div className="col-md-8" style={{width : '60%'}}>
+              <input type="submit" className="btn btn-primary" value="Search followers" disabled={!this.state.value}/>
             </div>
+          </form>
+          <div className="col-md-4">
+            <button className="btn btn-info" onClick={this.displayBest} style={{width: '100%'}}>
+              Viewed profiles ranking
+            </button>
           </div>
-        </form>
-        <div className="col-md-3">
-          <input type="submit" className="btn btn-info" onClick={this.displayBest}
-                 value="View people with most followers"/>
         </div>
-        { this.state.displayingBest == true ? <PopularFollowers/> :
+
+        {this.state.displayingBest == true ? <PopularFollowers action={this.handleSuperiorClick}/> :
           <div>
             <div>
               {this.state.users.map((user, i) =>
@@ -106,7 +117,7 @@ class SearchPlayer extends React.Component {
               )}
             </div>
           </div>
-          }
+        }
       </div>
     );
   }

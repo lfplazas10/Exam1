@@ -21,8 +21,7 @@ class AddFollower extends React.Component {
           <h4 className="card-title">{this.props.name}</h4>
         </div>
         <div className="card-footer">
-          <button onClick={this.handleButtonClick} className="btn btn-primary" to={{pathname: '/' + this.props.name + '/stats', query: this.props}}>See this user followers</button>
-          {/*<button >Find Out More!</button>*/}
+          <button onClick={this.handleButtonClick} className="btn btn-primary">See this user followers</button>
         </div>
       </div>
     </div>;
