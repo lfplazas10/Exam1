@@ -23,6 +23,17 @@ MongoClient.connect("mongodb://admin:AdminAdmin@ds139954.mlab.com:39954/datosdep
       });
     });
 
+    router.post('/followers/:userName', function (req, res) {
+      var player = {
+        name : req.params.userName,
+        followers : req.body.followers
+      }
+      var col = db.collection('Followers');
+      col.updateOne({"name" : req.params.userName }, player, {upsert: true}).then(function (mongoError, ej2) {
+        res.send(ej2);
+      })
+    });
+
     router.get('*', function (req, res) {
       res.sendFile(path.join(__dirname+'/client/build/index.html'));
     });
