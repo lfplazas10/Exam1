@@ -4,7 +4,7 @@ var MongoClient = require('mongodb').MongoClient;
 var path = require("path");
 var GitHubApi = require("github");
 
-MongoClient.connect("mongodb://admin:AdminAdmin@ds139954.mlab.com:39954/datosdeportivos", function (err, db) {
+MongoClient.connect(process.env.MONGO, function (err, db) {
   if (!err) {
     console.log("We are connected");
     router.use(express.static(path.join(__dirname, 'client/build')));
